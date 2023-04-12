@@ -8,7 +8,12 @@
 			<Dropdown :items="sortSettings" title="Sorting" @change="onSortChange" />
 		</div>
 		<div class="lg:grid-cols-3 lg:grid lg:mt-10 mt-5 flex flex-wrap gap-4">
-			<ProductCard v-for="i in 10" :key="i" class="lg:col-span-1"></ProductCard>
+			<ProductCard
+				v-for="product in products"
+				:key="product.id"
+				:product="product"
+				class="lg:col-span-1">
+			</ProductCard>
 		</div>
 	</div>
 </template>
@@ -22,6 +27,7 @@ import Dropdown from "../components/base/Dropdown.vue";
 
 const store = useStore();
 const categories = computed(() => [{ id: 0, label: "All" }, ...store.getters['categories/categories']]);
+const products = computed(() => [...store.getters['products/products']]);
 
 const sortSettings = [
 	{ label: "None", id: "none" },
