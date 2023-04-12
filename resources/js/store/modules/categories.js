@@ -5,7 +5,7 @@ export default {
 	state: {
 		categories: [],
 		currentCategory: 0,
-		currentSort: 0
+		currentSort: 'none'
 	},
 	getters: {
 		categories(state) {

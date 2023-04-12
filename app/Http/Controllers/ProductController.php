@@ -15,7 +15,18 @@ class ProductController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$products = Product::with('category')->get();;
+		$query = $request->query();
+
+		
+		if ($query['category'] !== '0' && $query['sort'] !== 'none') {
+			$products = Product::where('categories_id', $query['category'])->get()->sortByDesc($query['sort'])->values()->all();
+		} else if ($query['category'] === '0' && $query['sort'] !== 'none') {
+			$products = Product::all()->sortByDesc($query['sort'])->values()->all();
+		} else if ($query['sort'] === 'none' && $query['category'] !== '0') {
+			$products = Product::where('categories_id', $query['category'])->get();
+		} else {
+			$products = Product::all();
+		}
 
 		return response()->json([
 			'data' => $products,

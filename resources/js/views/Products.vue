@@ -27,7 +27,7 @@ const sortSettings = [
 	{ label: "None", id: "none" },
 	{ label: "Price", id: "price" },
 	{ label: "Rating", id: "rating" },
-	{ label: "Name", id: "name" },
+	{ label: "Title", id: "title" },
 ]
 
 const onCategoryChange = async ({ id }) => {
