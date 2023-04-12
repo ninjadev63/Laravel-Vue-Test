@@ -99,6 +99,13 @@ class UserController extends Controller
 	{
 		$body = $request->all();
 		$user = User::where('email', $body['email'])->first();
+		if (!$user) {
+			return response()->json([
+				'data' => [],
+				'success' => false,
+				'message' => 'Unregistered user'
+			], 401);
+		}
 		$validCredentials = Hash::check($body['password'], $user->password);
 
 		if ($validCredentials) {
@@ -111,7 +118,7 @@ class UserController extends Controller
 				'data' => [],
 				'success' => false,
 				'message' => 'Wrong password'
-			]);
+			], 401);
 		}
 
 	}

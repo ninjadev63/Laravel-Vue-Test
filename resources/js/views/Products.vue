@@ -8,11 +8,7 @@
 			<Dropdown :items="sortSettings" title="Sorting" @change="onSortChange" />
 		</div>
 		<div class="lg:grid-cols-3 lg:grid lg:mt-10 mt-5 flex flex-wrap gap-4">
-			<ProductCard
-				v-for="product in products"
-				:key="product.id"
-				:product="product"
-				class="lg:col-span-1">
+			<ProductCard v-for="product in products" :key="product.id" :product="product" class="lg:col-span-1">
 			</ProductCard>
 		</div>
 	</div>
@@ -25,8 +21,12 @@ import { useStore } from "vuex";
 import ProductCard from "../components/productCard.vue";
 import Dropdown from "../components/base/Dropdown.vue";
 
+import { calcAge } from "../util";
+
 const store = useStore();
 const categories = computed(() => [{ id: 0, label: "All" }, ...store.getters['categories/categories']]);
+const me = computed(() => store.getters['users/me']);
+const age = computed(() => calcAge(me.value.birthday))
 const products = computed(() => [...store.getters['products/products']]);
 
 const sortSettings = [
