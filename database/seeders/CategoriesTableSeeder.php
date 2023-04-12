@@ -25,19 +25,24 @@ class CategoriesTableSeeder extends Seeder
 		*/
 		$Categories = [
 			[
-				'label'      => 'Bags',
+				'label'        => 'Bags',
+				'is_validated' => true,
 			],
 			[
-				'label'      => 'Flower Port',
+				'label'        => 'Flower Port',
+				'is_validated' => false,
 			],
 			[
-				'label'      => 'Watch',
+				'label'        => 'Watch',
+				'is_validated' => false,
 			],
 			[
-				'label'      => 'Accessories',
+				'label'        => 'Accessories',
+				'is_validated' => false,
 			],
 			[
-				'label'      => 'Game Accessories',
+				'label'        => 'Game Accessories',
+				'is_validated' => false,
 			],
 		];
 
@@ -48,7 +53,8 @@ class CategoriesTableSeeder extends Seeder
 
 		foreach ($Categories as $Category) {
 			$category = new Category(array(
-				'label' => $Category['label']
+				'label' => $Category['label'],
+				'is_validated' => $Category['is_validated'],
 			));
 
 			$category->timestamps = false;

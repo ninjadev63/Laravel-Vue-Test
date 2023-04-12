@@ -23,10 +23,19 @@ import Dropdown from "../components/base/Dropdown.vue";
 
 import { calcAge } from "../util";
 
+
 const store = useStore();
-const categories = computed(() => [{ id: 0, label: "All" }, ...store.getters['categories/categories']]);
 const me = computed(() => store.getters['users/me']);
-const age = computed(() => calcAge(me.value.birthday))
+const age = computed(() => calcAge(me.value?.birthday));
+
+const categories = computed(() => {
+	const MIN_AGE = 18; const MAX_AGE = 30;
+	if (age.value >= MIN_AGE && age.value <= MAX_AGE) {
+		return [{ id: 0, label: "All", is_validate: 0 }, ...store.getters['categories/categories']];
+	} else {
+		return [{ id: 0, label: "All", is_validate: 0 }, ...store.getters['categories/categories'].filter(category => !category.is_validated)];
+	}
+});
 const products = computed(() => [...store.getters['products/products']]);
 
 const sortSettings = [

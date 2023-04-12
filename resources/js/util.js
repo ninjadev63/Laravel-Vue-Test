@@ -1,6 +1,8 @@
 export const calcAge = birthDay => {
-	console.log(birthDay);
+	if (!birthDay) return;
 	const now = new Date();
 	const currentYear = now.getFullYear();
-	console.log(currentYear);
+	const birthYear = birthDay.slice(0, 4);
+
+	return currentYear - birthYear;
 }
