@@ -3,7 +3,8 @@ import axios from "axios";
 export default {
 	namespaced: true,
 	state: {
-		users: []
+		users: [],
+		me: null
 	},
 	getters: {
 	},
@@ -26,4 +27,16 @@ export default {
 			}
 		}
 	},
+	async login({ commit }, payload) {
+		try {
+			const { data: { data, success } } = await axios.post("/api/login", payload);
+			if (success) {
+				commit('SET_ME', data);
+			}
+		} catch (e) {
+			//TODO: define global error handling
+			console.error('error', e);
+			throw e;
+		}
+	}
 };

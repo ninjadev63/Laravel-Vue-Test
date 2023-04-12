@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
@@ -87,5 +88,31 @@ class UserController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	/**
+	 * Login with email and password
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function login(Request $request)
+	{
+		$body = $request->all();
+		$user = User::where('email', $body['email'])->first();
+		$validCredentials = Hash::check($body['password'], $user->password);
+
+		if ($validCredentials) {
+			return response()->json([
+				'data' => $user,
+				'success' => true
+			]);
+		} else {
+			return response()->json([
+				'data' => [],
+				'success' => false,
+				'message' => 'Wrong password'
+			]);
+		}
+
 	}
 }
